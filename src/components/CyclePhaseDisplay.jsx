@@ -1,18 +1,35 @@
 // src/components/CyclePhaseDisplay.jsx
 import { motion } from 'framer-motion';
+import { PauseCircle } from 'lucide-react';
 import Card from './ui/Card';
 
 const CyclePhaseDisplay = ({ cycleInfo }) => {
+  // This 'if' block now handles three cases:
+  // 1. No entries at all.
+  // 2. No period logged before the selected date.
+  // 3. The cycle is longer than our reasonable threshold (the new logic).
   if (!cycleInfo || !cycleInfo.phase) {
     return (
-      <Card className="text-center">
-        <p className="text-text-secondary">{cycleInfo?.message || "Log your period to begin cycle tracking."}</p>
+      <Card className="bg-gray-100 text-center">
+        <PauseCircle className="mx-auto text-gray-400 mb-2" size={32} />
+        <p className="text-text-secondary font-medium">
+          {cycleInfo?.message || "Log your period to begin cycle tracking."}
+        </p>
+        {/* Also show the day count if it's a long cycle, which is useful info */}
+        {cycleInfo?.dayOfCycle > 0 && (
+          <p className="mt-2 text-sm font-semibold text-brand-primary">
+            Current Cycle Day: {cycleInfo.dayOfCycle}
+          </p>
+        )}
       </Card>
     );
   }
 
-  const { phase, dayOfCycle } = cycleInfo;
+  const { phase, dayOfCycle, targetDateStr } = cycleInfo;
   const Icon = phase.icon;
+  
+  const isToday = targetDateStr === new Date().toISOString().split('T')[0];
+  const displayDate = new Date(targetDateStr + 'T00:00:00').toLocaleDateString('en-us', { month: 'short', day: 'numeric' });
 
   return (
     <motion.div
@@ -28,6 +45,7 @@ const CyclePhaseDisplay = ({ cycleInfo }) => {
           <div>
             <p className="font-bold text-xl text-black">
               {phase.name} Phase
+              {!isToday && <span className="text-sm font-normal ml-2">({displayDate})</span>}
             </p>
             <p className="text-black text-sm">Day {dayOfCycle} of your cycle</p>
           </div>

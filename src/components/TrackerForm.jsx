@@ -19,6 +19,7 @@ const TrackerForm = ({ onSave, existingEntry, currentDate }) => {
       energyLevel: 5,
       sleepHours: 8,
       periodStarted: false,
+      periodEnded: false,
       cramps: false,
       flowIntensity: '',
       skinCondition: 'Normal',
@@ -108,11 +109,22 @@ const isToday = currentDate === getTodayDateString();
         {/* Period */}
         <div className="p-4 bg-pastel-pink/30 rounded-lg">
           <h3 className="font-semibold text-lg mb-2">Period Details</h3>
-          <div className="flex flex-wrap items-center gap-4">
-            <label className="flex items-center gap-2"><input type="checkbox" name="periodStarted" checked={entry.periodStarted} onChange={handleChange} className="rounded text-brand-primary focus:ring-brand-primary" /> Period Started Today</label>
-            <label className="flex items-center gap-2"><input type="checkbox" name="cramps" checked={entry.cramps} onChange={handleChange} className="rounded text-brand-primary focus:ring-brand-primary" /> Cramps</label>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <label className="flex items-center gap-2">
+              <input type="checkbox" name="periodStarted" checked={entry.periodStarted} onChange={handleChange} className="rounded text-brand-primary focus:ring-brand-primary" /> 
+              Period Started on this day
+            </label>
+            {/* --- ADD THE NEW CHECKBOX HERE --- */}
+            <label className="flex items-center gap-2">
+              <input type="checkbox" name="periodEnded" checked={entry.periodEnded} onChange={handleChange} className="rounded text-brand-primary focus:ring-brand-primary" />
+              Period Ended on this day
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="checkbox" name="cramps" checked={entry.cramps} onChange={handleChange} className="rounded text-brand-primary focus:ring-brand-primary" /> 
+              Cramps
+            </label>
           </div>
-           { (entry.periodStarted || entry.flowIntensity) && (
+           { (entry.periodStarted || entry.flowIntensity || entry.periodEnded) && (
               <div className="mt-4">
                 <label className="block font-medium mb-2">Flow Intensity</label>
                 <div className="flex gap-2">

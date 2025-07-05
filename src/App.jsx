@@ -29,10 +29,8 @@ function App() {
   };
 
   const entryForDate = entries.find(e => e.date === selectedDate);
-  const cycleInfo = useMemo(
-    () => calculateCyclePhase(entries, 28, selectedDate), 
-    [entries, selectedDate]
-  );
+  // NEW, CORRECTED LINE
+const cycleInfo = useMemo(() => calculateCyclePhase(entries, selectedDate), [entries, selectedDate]);
   
   // --- UPDATED: The handleSaveEntry function now triggers the modal ---
   const handleSaveEntry = (entryData) => {
