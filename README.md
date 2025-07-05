@@ -2,8 +2,6 @@
 
 **InPhase** is a beautifully minimal and user-centric web app designed to help women with PCOD (Polycystic Ovarian Disease) track their daily symptoms, understand their hormonal patterns, and receive personalized wellness tips — all in one clean, interactive interface.
 
-![InPhase Banner](link-to-your-banner-image)
-
 ---
 
 ## ✨ Features
